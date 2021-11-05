@@ -58,10 +58,6 @@ module.exports.calc = function (input) {
 		return conv('0');
 
 	return resultFloat.signBit + ' ' + resultFloat.degree + ' ' + resultFloat.mantissa;
-	
-	
-	
-	
 }
 
 function Float(input) {
@@ -108,6 +104,4 @@ function add(num1, num2) { //num.length = signBit + ImaginaryDigit + mantissa(23
 	tempFloat.twosComplement();
 	
 	return tempFloat.signBit + tempFloat.mantissa;
-	
-	
 }
