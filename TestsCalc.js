@@ -55,6 +55,10 @@ val1 = Math.pow(2, -120) + Math.pow(2, -125);
 val2 = Math.pow(2, -131) + Math.pow(2, -132);
 calcTest(val1, val2, '+');
 
+val1 = Math.pow(2, -149);
+val2 = Math.pow(2, -131);
+calcTest(val1, val2, '+');
+
 val1 = Math.pow(2, -127);
 calcTest(val1, val1, '+');
 
