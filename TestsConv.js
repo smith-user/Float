@@ -92,7 +92,7 @@ function convTest(input) {
 	return {
 		toBe: exp => {
 			let result;
-			report.push(`${input} (conv):`);
+			report.push(`${input} conv:`);
 			result = conv(input);
 			//console.log(input);
 			if (result == exp) {

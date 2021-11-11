@@ -13,45 +13,85 @@ let result;
 
 // ------------------------------------ TestCases: ------------------------------------
 
-calcTest('17+22').toBe('0 10000100 00111000000000000000000');
-calcTest('17+3').toBe('0 10000011 01000000000000000000000');
-calcTest('3.1+16.07').toBe('0 10000011 00110010101110000101000');
+calcTest(10, 0, '+');
+calcTest(10, 0, '-');
+calcTest(0, 0, '+');
+calcTest(0, 0, '-');
+calcTest(17, 22, '+');
+calcTest(17, 3, '+');
+calcTest(3.1, 16.07, '+');
+calcTest(256, 256, '-');
+calcTest(25, 30, '-');
+calcTest(-30, 25, '+');
+calcTest(100, 3, '-');
+calcTest(8, 15, '-');
+calcTest(4, 7.5, '-');
 
-calcTest('256-256').toBe(conv('0'));
-calcTest('25-30').toBe(conv('-5'));
-calcTest('-30+25').toBe(conv('-5'));
-calcTest('100-3').toBe(conv('97'));
+val1 = Math.pow(2, -5);
+val2 = Math.pow(2, -7);
+calcTest(val1, val2, '+');
 
-val1 = Math.pow(2, -130);
-val2 = Math.pow(2, -135);
-result = val1 + val2;
-calcTest(val1.toString() + '+' + val2.toString()).toBe(conv(result.toString()));
+val1 = Math.pow(2, -5);
+val2 = Math.pow(2, -7);
+calcTest(val1, val2, '-');
+
+val1 = (2 - Math.pow(2, -23)) * Math.pow(2, 127);
+val2 = (1 + Math.pow(2, -23) ) * Math.pow(2, 127);
+calcTest(val1, val2, '+');
+
+val1 = Math.pow(2, -126);
+val2 = Math.pow(2, -131);
+calcTest(val1, val2, '+');
+
+val1 = Math.pow(2, -126);
+val2 = Math.pow(2, -131);
+calcTest(val1, val2, '-');
+
+val1 = 1 
+val2 = Math.pow(2, -24);
+calcTest(val1, val2, '+');
+
+val1 = Math.pow(2, -120) + Math.pow(2, -125);
+val2 = Math.pow(2, -131) + Math.pow(2, -132);
+calcTest(val1, val2, '+');
 
 val1 = Math.pow(2, -127);
-result = val1 + val1;
-calcTest(val1.toString() + '+' + val1.toString()).toBe(conv(result.toString()));
+calcTest(val1, val1, '+');
 
 val1 = Math.pow(2, 127);
-val2 = Math.pow(2, 127);
-result = val1 + val2;
-calcTest(val1.toString() + '+' + val2.toString()).toBe(conv(result.toString()));
+calcTest(val1, val1, '+');
 
+val1 = Math.pow(2, 128);
+calcTest(val1, val1, '+');
+
+val1 = -Math.pow(2, 128);
+calcTest(val1, val1, '+');
+
+val1 = Math.pow(2, 128);
+val2 = 1024;
+calcTest(val1, val2, '+');
 
 // ------------------------------------------------------------------------------------
 
-function calcTest(input) {
-	return {
-		toBe: exp => {
-			let result;
-			report.push(`${input} (conv):`);
-			result = calc(input);
-			if (result == exp) {
-				report.push(`\tSuccess! '${result}'`);
-			} else {
-				report.push(`\tFailed! Value is   '${result}', \n\tbut expectation is '${exp}'.`);
-				countFailure += 1;
-			}
-		}
+function calcTest(num1, num2, op) {
+	let exp;
+	switch (op) {
+		case '+':
+			exp = num1 + num2;
+			break;
+		case '-':
+			exp = num1 - num2;
+			break;
+	}
+	let input = num1.toString() + op + num2.toString();
+	report.push(`${input} calc:`);
+	result = calc(input);
+	exp = conv(exp.toString());
+	if (result == exp) {
+		report.push(`\tSuccess! '${result}'`);
+	} else {
+		report.push(`\tFailed! Value is   '${result}', \n\tbut expectation is '${exp}'.`);
+		countFailure += 1;
 	}
 }
 
